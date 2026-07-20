@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Route root requests to public/
+    RewriteRule ^$ public/ [L]
+    
+    # Forward all other requests to public/ subfolder
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
