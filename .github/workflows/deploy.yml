@@ -45,4 +45,7 @@ jobs:
             sudo chmod -R 755 /var/www/html
             
             # 6. Restart Apache to apply changes
+
+            #update Apache config to point directly to the public folder
+            sudo sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
             sudo systemctl restart apache2
