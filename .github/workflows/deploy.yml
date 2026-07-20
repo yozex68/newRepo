@@ -47,7 +47,7 @@ jobs:
             # 6. Restart Apache to apply changes
 
             # Update Apache config to point directly to the public folder
-            sudo sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/0000-default.conf
+            sudo sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
             sudo sed -i 's|<Directory /var/www/>|<Directory /var/www/html/public/>|g' /etc/apache2/sites-available/000-default.conf
             
             # Allow .htaccess files to handle routing links

@@ -31,9 +31,6 @@
                                         <td class="text-secondary small" style="max-width: 200px;"><?= Helper::esc($p['description'] ?: 'No description.') ?></td>
                                         <td class="pe-4 text-end">
                                             <div class="d-flex justify-content-end align-items-center gap-2">
-                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $p['id'] ?>" title="Edit Programme">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
                                                 <a href="<?= Helper::url('/admin/programmes/delete/' . $p['id']) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this programme and all its courses/materials?')" title="Delete Programme">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
@@ -95,47 +92,3 @@
     </div>
 </div>
 
-<?php if (!empty($programmes)): ?>
-    <?php foreach ($programmes as $p): ?>
-        <!-- Edit Programme Modal -->
-        <div class="modal fade" id="editModal<?= $p['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $p['id'] ?>" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow-lg bg-white">
-                    <div class="modal-header bg-primary text-white py-3">
-                        <h5 class="modal-title fw-bold" id="editModalLabel<?= $p['id'] ?>"><i class="fas fa-edit me-2"></i> Edit Programme</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="<?= Helper::url('/admin/programmes/edit/' . $p['id']) ?>" method="POST">
-                        <?= Helper::csrf_field() ?>
-                        <div class="modal-body p-4">
-                            <div class="mb-3">
-                                <label for="edit_faculty_id<?= $p['id'] ?>" class="form-label small fw-semibold text-secondary">Parent Faculty</label>
-                                <select class="form-select text-dark" id="edit_faculty_id<?= $p['id'] ?>" name="faculty_id" required>
-                                    <?php foreach ($faculties as $f): ?>
-                                        <option value="<?= $f['id'] ?>" <?= ($f['id'] == $p['faculty_id']) ? 'selected' : '' ?>><?= Helper::esc($f['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_code<?= $p['id'] ?>" class="form-label small fw-semibold text-secondary">Programme Code</label>
-                                <input type="text" class="form-control text-dark" id="edit_code<?= $p['id'] ?>" name="code" value="<?= Helper::esc($p['code']) ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_name<?= $p['id'] ?>" class="form-label small fw-semibold text-secondary">Programme Name</label>
-                                <input type="text" class="form-control text-dark" id="edit_name<?= $p['id'] ?>" name="name" value="<?= Helper::esc($p['name']) ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_desc<?= $p['id'] ?>" class="form-label small fw-semibold text-secondary">Description</label>
-                                <textarea class="form-control text-dark" id="edit_desc<?= $p['id'] ?>" name="description" rows="3"><?= Helper::esc($p['description']) ?></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer bg-light p-3 border-top">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <?php endforeach; ?>
-<?php endif; ?>

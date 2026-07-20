@@ -31,9 +31,6 @@
                                         <td class="text-secondary small" style="max-width: 250px;"><?= Helper::esc($f['description'] ?: 'No description provided.') ?></td>
                                         <td class="pe-4 text-end">
                                             <div class="d-flex justify-content-end align-items-center gap-2">
-                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $f['id'] ?>" title="Edit Faculty">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
                                                 <a href="<?= Helper::url('/admin/faculties/delete/' . $f['id']) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this faculty and all its programmes/courses?')" title="Delete Faculty">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
@@ -80,35 +77,3 @@
     </div>
 </div>
 
-<?php if (!empty($faculties)): ?>
-    <?php foreach ($faculties as $f): ?>
-        <!-- Edit Faculty Modal -->
-        <div class="modal fade" id="editModal<?= $f['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $f['id'] ?>" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow-lg bg-white">
-                    <div class="modal-header bg-primary text-white py-3">
-                        <h5 class="modal-title fw-bold" id="editModalLabel<?= $f['id'] ?>"><i class="fas fa-edit me-2"></i> Edit Faculty</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="<?= Helper::url('/admin/faculties/edit/' . $f['id']) ?>" method="POST">
-                        <?= Helper::csrf_field() ?>
-                        <div class="modal-body p-4">
-                            <div class="mb-3">
-                                <label for="edit_name<?= $f['id'] ?>" class="form-label small fw-semibold text-secondary">Faculty Name</label>
-                                <input type="text" class="form-control text-dark" id="edit_name<?= $f['id'] ?>" name="name" value="<?= Helper::esc($f['name']) ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_desc<?= $f['id'] ?>" class="form-label small fw-semibold text-secondary">Description</label>
-                                <textarea class="form-control text-dark" id="edit_desc<?= $f['id'] ?>" name="description" rows="3"><?= Helper::esc($f['description']) ?></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer bg-light p-3 border-top">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <?php endforeach; ?>
-<?php endif; ?>
