@@ -24,7 +24,7 @@ jobs:
             sudo apt-get update -y
             
             # 2. Install Apache, PHP, and MySQL extension silently if not installed
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 php libapache2-mod-php php-mysql git
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 php libapache2-mod-php php-mysql git mysql-server
             
             # 3. Enable Apache rewrite engine for your .htaccess file
             sudo a2enmod rewrite
@@ -46,6 +46,10 @@ jobs:
             
             # 6. Restart Apache to apply changes
 
-            #update Apache config to point directly to the public folder
-            sudo sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+            # Update Apache config to point directly to the public folder
+            sudo sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/0000-default.conf
+            sudo sed -i 's|<Directory /var/www/>|<Directory /var/www/html/public/>|g' /etc/apache2/sites-available/000-default.conf
+            
+            # Allow .htaccess files to handle routing links
+            sudo sed -i '/<Directory \/var\/www\/html\/public\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/sites-available/000-default.conf
             sudo systemctl restart apache2
